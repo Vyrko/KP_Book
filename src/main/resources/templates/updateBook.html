@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UpdateBook</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cerulean/bootstrap.min.css">
+</head>
+<body>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2">Редактирование</h1>
+                <a href=" ">X</a>
+            </div>
+            <div class="modal-body p-5 pt-0" style="height: 500px; overflow-y: scroll;">
+                <form  th:action="*{'/adminHome/book/update/' + book.getId() }" method="post" enctype="multipart/form-data">
+                    <div class="form-floating mb-3">
+                        <input name="name" type="text" class="form-control rounded-3" id="NameBookInput"
+                               th:value="${book.getName()}">
+                        <label for="NameBookInput">Название</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input name="author" type="text" class="form-control rounded-3" id="AuthorBookInput"
+                               th:value="${book.getAuthor()}">
+                        <label for="AuthorBookInput">Автор</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input name="cost" type="text" class="form-control rounded-3" id="CostBookInput"
+                               th:value="${book.getCost()}">
+                        <label for="CostBookInput">Стоимость</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input name="file1" type="file" class="form-control rounded-3"  id="PhotoBookInput">
+                        <label for="PhotoBookInput">Фото</label>
+                    </div>
+                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Добавить</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
