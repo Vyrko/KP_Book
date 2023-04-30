@@ -19,6 +19,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "email",unique = true)
     private String email;
     private String phoneNumber;
@@ -38,6 +39,8 @@ public class User implements UserDetails {
     private LocalDateTime dataOfCreated;
     @PrePersist
     private void init(){dataOfCreated=LocalDateTime.now();}
+
+    public boolean isAdmin(){return role.contains(Role.ROLE_ADMIN);}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

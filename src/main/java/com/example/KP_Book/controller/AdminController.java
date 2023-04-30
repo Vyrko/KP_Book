@@ -2,9 +2,12 @@ package com.example.KP_Book.controller;
 
 import com.example.KP_Book.entity.Book;
 import com.example.KP_Book.entity.Genre;
+import com.example.KP_Book.entity.User;
 import com.example.KP_Book.services.BookService;
 import com.example.KP_Book.services.GenreService;
+import com.example.KP_Book.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +19,20 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/adminHome")
-public class AdminHomeController {
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+public class AdminController {
     private final GenreService genreService;
     private final BookService bookService;
+    private final UserService userService;
 
     @GetMapping
     public String adminHome(Model model) {
         Iterable<Book> books=bookService.AllBook();
         Iterable<Genre> genres =genreService.readAllGenre();
+        Iterable<User> users=userService.allUser();
                 model.addAttribute("genres", genres);
                 model.addAttribute("books", books);
+                model.addAttribute("users", users);
         return "adminHome";
     }
 
@@ -52,6 +59,11 @@ public class AdminHomeController {
     public String updateBook(@RequestParam("file1") MultipartFile file1,
                              Book book) throws IOException {
         bookService.updateBook(book, file1);
+        return "redirect:/adminHome";
+    }
+    @PostMapping("/user/ban/{id}")
+    public String userBan(@PathVariable("id") Long id){
+        userService.banUser(id);
         return "redirect:/adminHome";
     }
 }

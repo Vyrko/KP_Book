@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -20,7 +21,7 @@ public class UserService {
     public boolean saveUser(User user) throws IOException {
         if (userRepository.findByEmail(user.getEmail()) !=null) return false;
         user.setActive(true);
-        user.getRole().add(Role.ROLE_USER);
+        user.getRole().add(Role.ROLE_ADMIN);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         log.info("Save new user email: {}", user.getEmail());
         userRepository.save(user);
@@ -29,8 +30,22 @@ public class UserService {
     public boolean saveAdmin(User user){
         if (userRepository.findByEmail(user.getEmail()) !=null) return false;
         user.setActive(true);
-        user.getRole().add(Role.ROLE_ADMIN);
+        user.getRole().add(Role.ROLE_USER);
         log.info("Save new user email: {}", user.getEmail());
         return true;
+    }
+    public List<User> allUser(){
+        return  userRepository.findAll();
+    }
+    public void banUser(Long id){
+        User badUser=userRepository.findById(id).orElse(null);
+        if (badUser!=null){
+           if (badUser.isActive()){
+               badUser.setActive(false);
+               log.info("Ban user with id = {}; email = {}", badUser.getId(), badUser.getEmail());
+           }else badUser.setActive(true);
+        }else log.info("Failed to block user with email = {};", badUser.getEmail());
+
+        userRepository.save(badUser);
     }
 }
