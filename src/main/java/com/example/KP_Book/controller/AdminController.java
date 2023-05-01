@@ -8,6 +8,7 @@ import com.example.KP_Book.services.GenreService;
 import com.example.KP_Book.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,11 +29,14 @@ public class AdminController {
     private final UserService userService;
 
     @GetMapping
-    public String adminHome( @ModelAttribute("newBook") Book newBook, Model model) {
+    public String adminHome( @AuthenticationPrincipal User authUser,
+                             @ModelAttribute("newBook") Book newBook,
+                             Model model) {
         Iterable<Book> books=bookService.AllBook();
         Iterable<Genre> genres =genreService.readAllGenre();
         Iterable<User> users=userService.allUser();
                 model.addAttribute("newBook", newBook);
+                model.addAttribute("authUser", authUser);
                 model.addAttribute("genres", genres);
                 model.addAttribute("books", books);
                 model.addAttribute("users", users);

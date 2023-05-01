@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -50,6 +51,12 @@ public class UserController {
         List<Order> orders=orderService.readAllOrdersByUserId(user);
         model.addAttribute("user", user);
         model.addAttribute("orders", orders);
+        return "userInfo";
+    }
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
+    @PostMapping("/user/update/{id}")
+    public String userUpdate(@PathVariable("id") Long id, User user, Model model){
+        userService.updateUser(user,id);
         return "userInfo";
     }
 }

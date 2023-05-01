@@ -26,6 +26,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     @NotEmpty(message = "Поле не должно быть пустым!")
     private String name;
     private double cost;
@@ -39,6 +40,7 @@ public class Book {
             }
     )
     private List<Genre> genres = new ArrayList<>();
+    @NotEmpty(message = "Поле не должно быть пустым!")
     private String author;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
             mappedBy = "book")

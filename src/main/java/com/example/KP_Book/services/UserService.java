@@ -48,4 +48,12 @@ public class UserService {
 
         userRepository.save(badUser);
     }
+
+    public void updateUser(User user,Long id) {
+        User userFromDB=userRepository.findById(id).orElse(null);
+        if (user.getName()!=null) userFromDB.setName(user.getName());
+        if (user.getEmail()!=null) userFromDB.setEmail(user.getEmail());
+        if (user.getPhoneNumber()!=null) userFromDB.setPhoneNumber(user.getPhoneNumber());
+        userRepository.save(userFromDB);
+    }
 }

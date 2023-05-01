@@ -49,11 +49,13 @@
                         <input name="author" type="text" class="form-control rounded-3" id="AuthorBookInput"
                                placeholder="Пушкин А.С.">
                         <label for="AuthorBookInput">Автор</label>
+                        <div style="color: red;" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Name Error</div>
                     </div>
                     <div class="form-floating mb-3">
                         <input name="cost" type="number" class="form-control rounded-3" id="cost"
                                placeholder="50.4">
                         <label for="cost">Стоимость</label>
+
                     </div>
                     <div class="form-floating mb-3">
                         <input name="file1" type="file" class="form-control rounded-3" id="PhotoBookInput">
@@ -102,7 +104,7 @@
             </div>
             <div class="modal-body p-5 pt-0" style="height: 500px; overflow-y: scroll;">
                 <div class="container border-bottom" th:if="${users}!=null" th:each="user : ${users}">
-                    <form th:action="*{'/adminHome/user/ban/' + user.getId() }" method="post">
+                    <form th:unless="${user.getId() == authUser.getId()}" th:action="*{'/adminHome/user/ban/' + user.getId() }" method="post">
                         <b>Email: </b><b th:text="${user.email}"/> <br>
                         <b>Имя: </b><b th:text="${user.name}"/> <br>
                         <b>Статус: </b><b th:text="${user.active}"/> <br>
