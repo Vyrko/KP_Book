@@ -66,4 +66,8 @@ public class MainHomeController {
         model.addAttribute("image",images);
         return "Book-info";
     }
+    @GetMapping("/map")
+    public String getMap(){
+        return "map";
+    }
 }
