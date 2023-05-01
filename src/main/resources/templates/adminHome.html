@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>AdminHome</title>
+    <link rel="shortcut icon" href="../static/img/iconBookSell.png" type="image/png">
     <style>
         div.main {
             display: flex;
@@ -37,11 +38,12 @@
                 <a href=" ">X</a>
             </div>
             <div class="modal-body p-5 pt-0" style="height: 500px; overflow-y: scroll;">
-                <form action="/adminHome/book/create" method="post" enctype="multipart/form-data">
+                <form action="/adminHome/book/create" method="post" enctype="multipart/form-data" th:object="${newBook}">
                     <div class="form-floating mb-3">
-                        <input name="name" type="text" class="form-control rounded-3" id="NameBookInput"
+                        <input name="name" type="text" class="form-control rounded-3" id="name"
                                placeholder="Синие моря">
-                        <label for="NameBookInput">Название</label>
+                        <label for="name">Название</label>
+                        <div style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
                     </div>
                     <div class="form-floating mb-3">
                         <input name="author" type="text" class="form-control rounded-3" id="AuthorBookInput"
@@ -49,9 +51,9 @@
                         <label for="AuthorBookInput">Автор</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input name="cost" type="text" class="form-control rounded-3" id="CostBookInput"
+                        <input name="cost" type="text" class="form-control rounded-3" id="cost"
                                placeholder="50.4">
-                        <label for="CostBookInput">Стоимость</label>
+                        <label for="cost">Стоимость</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input name="file1" type="file" class="form-control rounded-3" id="PhotoBookInput">

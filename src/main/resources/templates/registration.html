@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Регистрация</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cerulean/bootstrap.min.css">
+    <link rel="shortcut icon" href="../static/img/iconBookSell.png" type="image/png">
 </head>
 <body>
     <div class="modal-dialog" role="document">
@@ -19,31 +20,35 @@
 
             </div>
             <div class="modal-body p-5 pt-0">
-                <form action="/registration" method="post" class="">
+                <form action="/registration" method="post" class="" th:object="${user}">
                     <div class="form-floating mb-3">
-                        <input name="email" type="email" class="form-control rounded-3" id="RegInput"
+                        <input name="email" type="email" class="form-control rounded-3" id="email"
                                placeholder="name@example.com">
-                        <label for="RegInput">Адрес электронной почты</label>
+                        <label for="email">Адрес электронной почты</label>
+                        <div style="color: red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</div>
                     </div>
                     <div class="form-floating mb-3">
                         <input name="password" type="password" class="form-control rounded-3" id="RegPassword"
                                placeholder="Пароль">
                         <label for="RegPassword">Пароль</label>
+
                     </div>
                     <div class="form-floating mb-3">
-                        <input name="name" type="text" class="form-control rounded-3" id="RegName"
+                        <input name="name" type="text" class="form-control rounded-3" id="name"
                                placeholder="Максим">
-                        <label for="RegName">Имя</label>
+                        <label for="name">Имя</label>
+                        <div style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+
                     </div>
                     <div class="form-floating mb-3">
-                        <input name="phoneNumber" type="text" class="form-control rounded-3" id="RegPhone"
+                        <input name="phoneNumber" type="text" class="form-control rounded-3" id="phoneNumber"
                                placeholder="+375292060541">
-                        <label for="RegPhone">Номер телефона</label>
+                        <label for="phoneNumber">Номер телефона</label>
+                        <div style="color: red;" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name Error</div>
                     </div>
                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">
                         Зарегистрироваться
                     </button>
-                    <div class="alert alert-danger" th:if="errorMessage!=null" th:text="${errorMessage}" role="alert"></div>
                 </form>
 
             </div>

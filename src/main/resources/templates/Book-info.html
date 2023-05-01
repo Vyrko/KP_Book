@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>BOOKSELL</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cerulean/bootstrap.min.css">
+    <link rel="shortcut icon" href="../static/img/iconBookSell.png" type="image/png">
 
 </head>
 <body>
@@ -65,12 +66,12 @@
                 <div class="h-100 p-5 rounded-3">
                     <form th:action="*{'/buyBook/' + book.getId()}" method="post" enctype="multipart/form-data">
                         <div class="form-floating mb-3">
-                            <input th:value="${quantity ?: 1}" onchange="updatePrice()" id="quantity" name="quantity" type="number" class="form-control rounded-3"
+                            <input th:value="${quantity ?: 0}" onchange="updatePrice()" id="quantity" name="quantity" type="number" class="form-control rounded-3"
                                    placeholder="1">
                             <label >Количество</label>
                         </div>
                         <div class="form-floating mb-3 d-flex justify-content-evenly">
-                            <h3 id="price" th:value="${quantity ?: 1} * ${book.cost}" ></h3><h3>      BYN</h3>
+                            <h3 id="price" th:value="${quantity ?: 0} * ${book.cost}" ></h3><h3>      BYN</h3>
                         </div>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Купить</button>
                     </form>

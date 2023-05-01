@@ -10,9 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,10 +28,11 @@ public class AdminController {
     private final UserService userService;
 
     @GetMapping
-    public String adminHome(Model model) {
+    public String adminHome( @ModelAttribute("newBook") Book newBook, Model model) {
         Iterable<Book> books=bookService.AllBook();
         Iterable<Genre> genres =genreService.readAllGenre();
         Iterable<User> users=userService.allUser();
+                model.addAttribute("newBook", newBook);
                 model.addAttribute("genres", genres);
                 model.addAttribute("books", books);
                 model.addAttribute("users", users);
@@ -37,10 +40,13 @@ public class AdminController {
     }
 
     @PostMapping("/book/create")
-    public String createBook(@RequestParam("file1") MultipartFile file1,
-                             @RequestParam("checkboxGenre") List<Long> idGenre,
-                             Book book) throws IOException {
-        bookService.saveBook(book, file1,genreService.readAllGenresById(idGenre));
+    public String createBook(@ModelAttribute("newBook") @Valid Book newBook, BindingResult bindingResult,
+                             @RequestParam("file1") MultipartFile file1,
+                             @RequestParam("checkboxGenre") List<Long> idGenre) throws IOException {
+        if (bindingResult.hasErrors()){
+            return "adminHome";
+        }
+        bookService.saveBook(newBook, file1,genreService.readAllGenresById(idGenre));
         return "redirect:/adminHome";
     }
 

@@ -2,6 +2,10 @@ package com.example.KP_Book.entity;
 
 import com.example.KP_Book.entity.Enum.Role;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,8 +25,15 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "email",unique = true)
+    @NotEmpty(message = "Поле не должно быть пустым!")
+    @Email(message = "Адрес почты должен быть валидным")
     private String email;
+
+    @Pattern(regexp = "\\+375\\s(17|25|29|33|44)\\s\\d{3}\\s\\d{2}\\s\\d{2}", message = "Invalid phone number")
     private String phoneNumber;
+
+    @NotEmpty(message = "Поле не должно быть пустым!")
+    @Size(min = 2, max = 30, message = "Имя должно состоять от 2 до 30 символов")
     private String name;
     @Column(name = "active")
     private boolean active;
