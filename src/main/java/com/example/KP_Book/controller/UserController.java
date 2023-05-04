@@ -42,12 +42,19 @@ public class UserController {
     @PostMapping("/registration")
     public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) throws IOException {
         if (bindingResult.hasErrors()) return "registration";
+        if (userService.emailExist(user.getEmail())){
+            model.addAttribute("error", "Такой пользователь уже существует");
+            model.addAttribute("user", user);
+            return "registration";
+        }
         userService.saveUser(user);
         return "redirect:/login";
     }
     @PreAuthorize("hasAnyAuthority('ROLE_USER')")
-    @GetMapping("/user")
-    public String userInfo(@AuthenticationPrincipal User user, Model model){
+    @GetMapping ("/user")
+    public String userInfo(
+            @ModelAttribute("newUser") @Valid User newUser, BindingResult bindingResult,
+            @AuthenticationPrincipal User user, Model model){
         List<Order> orders=orderService.readAllOrdersByUserId(user);
         model.addAttribute("user", user);
         model.addAttribute("orders", orders);
@@ -55,7 +62,8 @@ public class UserController {
     }
     @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     @PostMapping("/user/update/{id}")
-    public String userUpdate(@PathVariable("id") Long id, User user, Model model){
+    public String userUpdate(
+            @PathVariable("id") Long id, User user, Model model){
         userService.updateUser(user,id);
         return "userInfo";
     }

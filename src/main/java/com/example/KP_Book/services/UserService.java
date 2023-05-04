@@ -56,4 +56,11 @@ public class UserService {
         if (user.getPhoneNumber()!=null) userFromDB.setPhoneNumber(user.getPhoneNumber());
         userRepository.save(userFromDB);
     }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+    public boolean emailExist(String email) {
+        return userRepository.findByEmail(email) != null;
+    }
 }

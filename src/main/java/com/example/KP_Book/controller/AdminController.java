@@ -76,4 +76,9 @@ public class AdminController {
         userService.banUser(id);
         return "redirect:/adminHome";
     }
+    @GetMapping("/user/delete/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return "redirect:/adminHome";
+    }
 }

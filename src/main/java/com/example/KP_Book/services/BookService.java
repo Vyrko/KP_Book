@@ -58,6 +58,7 @@ public class BookService {
     public Book getBookById(Long id) {
         return bookRepository.findById(id).orElse(null);
     }
+    public boolean bookExist(String name){ return bookRepository.findByName(name) != null;}
 
     public Iterable<Book> readBook() {
         Iterable<Book> books = bookRepository.findAll();

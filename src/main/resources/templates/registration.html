@@ -46,6 +46,9 @@
                         <label for="phoneNumber">Номер телефона</label>
                         <div style="color: red;" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name Error</div>
                     </div>
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                        <span th:text="${error}"></span>
+                    </div>
                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">
                         Зарегистрироваться
                     </button>

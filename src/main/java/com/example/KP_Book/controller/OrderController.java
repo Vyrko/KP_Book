@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class OrderController {
@@ -22,6 +24,9 @@ public class OrderController {
                                        @PathVariable Long id,
                                        @RequestParam("quantity") int quantity){
         orderService.createOrder(user, id, quantity);
+        List<Order> orders=orderService.readAllOrdersByUserId(user);
+        model.addAttribute("user", user);
+        model.addAttribute("orders", orders);
         return "userInfo";
     }
 }

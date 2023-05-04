@@ -29,7 +29,7 @@ public class User implements UserDetails {
     @Email(message = "Адрес почты должен быть валидным")
     private String email;
 
-    @Pattern(regexp = "\\+375(17|25|29|33|44)\\d{7}", message = "Invalid phone number")
+    @Pattern(regexp = "\\+375(17|25|29|33|44)\\d{7}", message = "Не верный формат")
     private String phoneNumber;
 
     @NotEmpty(message = "Поле не должно быть пустым!")

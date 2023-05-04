@@ -28,6 +28,7 @@
     <button onclick="document.getElementById('updateBook').style.display='block'">Редактировать</button>
     <button onclick="document.getElementById('deleteBook').style.display='block'">Удалить</button>
     <button onclick="document.getElementById('banUser').style.display='block'">Аккаунты</button>
+    <button onclick="document.getElementById('deleteUser').style.display='block'">Удаление аккаунтов</button>
 </div>
 
 <div id="addBook" class="modal">
@@ -150,6 +151,28 @@
                         <b>Название: </b><b th:text="${book.name}"/> <br>
                         <b>Цена: </b><b th:text="${book.cost}"/> <br>
                         <b>Автор: </b><b th:text="${book.author}"/> <br>
+                        <input type="submit" value="Удалить"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteUser" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2">Удаление клиентов</h1>
+                <h4>При удалении аккаунта клиента его уже не восстановить</h4>
+                <a href=" ">X</a>
+            </div>
+            <div class="modal-body p-5 pt-0" style="height: 500px; overflow-y: scroll;">
+                <div class="container border-bottom" th:if="${user}!=null" th:each="user : ${users}">
+                    <form th:unless="${user.getId() == authUser.getId()}"  th:action="*{'/adminHome/user/delete/' + user.getId() }" method="get">
+                        <b>Email: </b><b th:text="${user.email}"/> <br>
+                        <b>Имя: </b><b th:text="${user.name}"/> <br>
+                        <b>Статус: </b><b th:text="${user.active}"/> <br>
                         <input type="submit" value="Удалить"/>
                     </form>
                 </div>
